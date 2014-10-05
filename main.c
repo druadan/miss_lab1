@@ -24,23 +24,48 @@ void print_fraction(mpz_t dividend, mpz_t divisor,  int d) {
             gmp_printf("%Zd", quotient);
         }
     }
+    gmp_printf("\n");
     return;
 }
 
 void process(int d){
     mpz_t x;
     mpz_t sum;
+    mpz_t sum2;
     mpz_t count;
     mpz_init(x);
     mpz_init(sum);
+    mpz_init(sum2);
     mpz_init(count);
 
     while (gmp_scanf("%Zd", x) > 0) {
         mpz_add_ui(count,count,1);
         mpz_add(sum,sum,x);
+        mpz_mul(x, x, x);
+        mpz_add(sum2, sum2, x);
     }
+
+    // print average
     print_fraction(sum, count, d);
-    gmp_printf("\n");
+
+    // print variation
+    mpz_t count2;    // n^2
+    mpz_t tmp1;      // Ex^2 * n
+    mpz_t tmp2;      // (Ex)^2 
+    mpz_t tmp3;      // Ex^2 * n - (Ex)^2 
+    mpz_init(count2);
+    mpz_init(tmp1);
+    mpz_init(tmp2);
+    mpz_init(tmp3);
+    mpz_set(count2,count);
+    mpz_mul(count2,count2,count2);
+
+    mpz_mul(tmp1, sum2, count);
+    mpz_mul(tmp2, sum, sum);
+    mpz_sub(tmp3, tmp1, tmp2);
+
+    print_fraction(tmp3, count2, d);
+
 
 }
 
