@@ -4,7 +4,7 @@
 #include <gmp.h>
 
 
-void print_fraction(mpz_t dividend, mpz_t divisor,  int d) {
+void print(mpz_t dividend, mpz_t divisor,  int d) {
     mpz_t quotient;
     mpz_t remainder;
     mpz_init(quotient);
@@ -46,7 +46,7 @@ void process(int d){
     }
 
     // print average
-    print_fraction(sum, count, d);
+    print(sum, count, d);
 
     // print variation
     mpz_t count2;    // n^2
@@ -64,7 +64,7 @@ void process(int d){
     mpz_mul(tmp2, sum, sum);
     mpz_sub(tmp3, tmp1, tmp2);
 
-    print_fraction(tmp3, count2, d);
+    print(tmp3, count2, d);
 
 
 }
